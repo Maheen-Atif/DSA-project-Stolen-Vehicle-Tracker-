@@ -6,7 +6,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 class Vehicle {
-    String id, owner, model, city;
+    String id;
+    String owner;
+    String model;
+    String city;
     boolean stolen;
 
     Vehicle(String id, String owner, String model, String city) {
@@ -22,7 +25,8 @@ class VehicleSystem {
     HashMap<String, Vehicle> map = new HashMap<>();
 
     boolean add(Vehicle v) {
-        if (map.containsKey(v.id)) return false;
+        if (map.containsKey(v.id))
+            return false;
         map.put(v.id, v);
         return true;
     }
@@ -70,7 +74,10 @@ class Trie {
     }
 
     void collect(TrieNode node, String prefix, ArrayList<String> res) {
-        if (node.isEnd) res.add(prefix);
+        if (node.isEnd) {
+            res.add(prefix);
+        }
+
         for (char c : node.children.keySet())
             collect(node.children.get(c), prefix + c, res);
     }
@@ -143,8 +150,9 @@ class Dashboard extends JFrame {
         tabs.add("Register", registerTab());
         tabs.add("All Vehicles", showTab());
         tabs.add("Search", searchTab());
-        tabs.add("Graph Routes", graphTab());
         tabs.add("Mark Stolen", stolenTab());
+        tabs.add("Graph Routes", graphTab());
+
 
         add(header, BorderLayout.NORTH);
         add(tabs, BorderLayout.CENTER);
@@ -213,7 +221,7 @@ class Dashboard extends JFrame {
         JTextArea area = new JTextArea();
         styleArea(area);
 
-        JButton btn = new JButton("REFRESH");
+        JButton btn = new JButton("Show");
         styleButton(btn);
 
         btn.addActionListener(e -> {
@@ -398,12 +406,13 @@ class Dashboard extends JFrame {
         graph.addCity("Lahore");
         graph.addCity("Karachi");
         graph.addCity("Islamabad");
-
+        graph.addCity("Multan");
         graph.addRoad("Lahore","Islamabad");
         graph.addRoad("Lahore","Karachi");
         graph.addRoad("Islamabad","Karachi");
+        graph.addRoad("Lahore","Faisalabad");
+        graph.addRoad("Multan","Karachi");
     }
-
     public static void main(String[] args) {
         new Dashboard();
     }
